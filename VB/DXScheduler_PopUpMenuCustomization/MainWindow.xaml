@@ -1,0 +1,121 @@
+﻿<Window x:Class="DXScheduler_PopUpMenuCustomization.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dxsch="http://schemas.devexpress.com/winfx/2008/xaml/scheduling"
+        xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+        xmlns:local="clr-namespace:DXScheduler_PopUpMenuCustomization"
+        mc:Ignorable="d"
+        Title="DXScheduler" Height="350" Width="525" 
+        DataContext="{dxmvvm:ViewModelSource {x:Type local:MainViewModel}}">
+        <Grid>
+            <dxsch:SchedulerControl x:Name="scheduler"
+                                    ActiveViewIndex="0"
+                                    ShowBorder="true"                                     
+                                    GroupType="Date" 
+                                    WorkDays="WorkDays,Saturday" 
+                                    WorkTime="06:00:00-23:00:00">
+                <dxsch:SchedulerControl.DataSource>
+                    <dxsch:DataSource AppointmentsSource="{Binding SportEvents}" 
+                                      ResourcesSource="{Binding SportChannels}" 
+                                      AppointmentLabelsSource="{Binding SportGroups}">
+                        <dxsch:DataSource.AppointmentMappings>
+                            <dxsch:AppointmentMappings Id="Id"
+                                                       AllDay="AllDay"
+                                                       Type="Type"
+                                                       Start="StartTime"
+                                                       End="EndTime"
+                                                       Subject="Caption"
+                                                       ResourceId="ChannelId"
+                                                       LabelId="SportId"
+                                                       RecurrenceInfo="RecurrenceInfo"
+                                                       Reminder="ReminderInfo"/>
+                        </dxsch:DataSource.AppointmentMappings>
+                        <dxsch:DataSource.ResourceMappings>
+                            <dxsch:ResourceMappings Id="Id" 
+                                                    Caption="Caption"/>
+                        </dxsch:DataSource.ResourceMappings>
+                        <dxsch:DataSource.AppointmentLabelMappings>
+                            <dxsch:AppointmentLabelMappings Id="Id" 
+                                                            Caption="Caption"
+                                                            Color="Color"/>
+                        </dxsch:DataSource.AppointmentLabelMappings>
+                    </dxsch:DataSource>
+                </dxsch:SchedulerControl.DataSource>
+                <dxsch:DayView x:Name="dayView1" 
+                               ShowTimeIndicatorOverAppointment="True"
+                               ResourcesPerPage="2" 
+                               DayCount="2"/>
+                <dxsch:SchedulerControl.Commands>
+                    <dxsch:SchedulerCommands x:Name="schedulerCommands"/>
+                </dxsch:SchedulerControl.Commands>
+                
+                <dxsch:SchedulerControl.OptionsContextMenu>
+                    <dxsch:OptionsContextMenu>
+                        <!--region #AppointmentDropContextMenu-->
+                        <dxsch:OptionsContextMenu.AppointmentDropContextMenuActions>
+                            <!--Remove the "Copy" item-->
+                            <dxb:RemoveAction ElementName="{x:Static Member=dxsch:DefaultBarItemNames.ContextMenu_Items_AppointmentDrop_Actions_CopyAppointmentsOnDrop}"/>
+                        </dxsch:OptionsContextMenu.AppointmentDropContextMenuActions>
+                        <!--endregion #AppointmentDropContextMenu-->
+
+                        <!--region #TimeRulerContextMenu-->
+                        <dxsch:OptionsContextMenu.TimeRulerContextMenuActions>
+                            <!--Hide the "New All Day Event" and "New Recurring Event" items-->
+                            <dxb:UpdateAction ElementName="{x:Static Member=dxsch:DefaultBarItemNames.ContextMenu_Items_TimeRuler_Actions_NewAllDayEvent}" 
+											  PropertyName="IsVisible" 
+											  Value="False"/>
+							<dxb:UpdateAction ElementName="{x:Static Member=dxsch:DefaultBarItemNames.ContextMenu_Items_TimeRuler_Actions_NewRecurringEvent}" 
+										      PropertyName="IsVisible" 
+										      Value="False"/>
+                        <!--Disable the "New Appointment" and "New Recurring Appointment" item-->
+                            <dxb:UpdateAction ElementName="{x:Static Member=dxsch:DefaultBarItemNames.ContextMenu_Items_TimeRuler_Actions_NewAppointment}" 
+                                              PropertyName="IsEnabled" 
+											  Value="False"/>
+							<dxb:UpdateAction ElementName="{x:Static Member=dxsch:DefaultBarItemNames.ContextMenu_Items_TimeRuler_Actions_NewRecurringAppointment}" 
+											  PropertyName="IsEnabled" 
+										      Value="False"/>
+                    </dxsch:OptionsContextMenu.TimeRulerContextMenuActions>
+                        <!--endregion #TimeRulerContextMenu-->
+
+                        <!--region #AppointmentContextMenu-->
+                        <dxsch:OptionsContextMenu.AppointmentContextMenuActions>
+                            <!--Insert the "Recurrence" item invoking the Recurrence dialog-->
+                            <dxb:InsertAction Index="-1">
+                                <dxb:BarButtonItem Content="Recurrence" 
+												   Glyph="{dx:DXImage Image=Recurrence_32x32.png}"                                               
+                                                   Command="{Binding ElementName=schedulerCommands, Path=OpenRecurrenceWindowCommand}">
+                                </dxb:BarButtonItem>
+                            </dxb:InsertAction>
+                            <!--Insert the check item which converts the selected appointment to an all day event-->
+                            <dxb:InsertAction>
+                                <dxb:BarCheckItem x:Name="allDayCheck" 
+                                                  Content="All-Day Appointment" 
+                                                  Glyph="{dx:DXImage Image=Check_16x16.png}" 
+                                                  CheckedChanged="allDayCheck_CheckedChanged"/>
+                            </dxb:InsertAction>
+                    </dxsch:OptionsContextMenu.AppointmentContextMenuActions>
+                        <!--endregion #AppointmentContextMenu-->
+                        
+                        <!--region #CellContextMenu-->
+                        <dxsch:OptionsContextMenu.CellContextMenu>
+                            <dxb:PopupMenu>
+                                <dxb:PopupMenu.Items>
+                                    <dxb:BarButtonItem Content="Add Broadcast..." 
+                                                       Glyph="{dx:DXImage Image=Appointment_16x16.png}" 
+                                                       Command="{Binding ElementName=schedulerCommands, Path=ShowNewAppointmentWindowCommand}"/>
+									<dxb:BarButtonItem Content="Add News Block..." 
+                                                       Glyph="{dx:DXImage Image=RecurringAppointment_16x16.png}" 
+                                                       Command="{Binding ElementName=schedulerCommands, Path=ShowNewRecurringAppointmentWindowCommand}"/>
+								</dxb:PopupMenu.Items>
+                            </dxb:PopupMenu>
+                        </dxsch:OptionsContextMenu.CellContextMenu>
+                        <!--endregion #CellContextMenu-->
+                    </dxsch:OptionsContextMenu>
+                </dxsch:SchedulerControl.OptionsContextMenu>
+            </dxsch:SchedulerControl>
+        </Grid>
+</Window>
