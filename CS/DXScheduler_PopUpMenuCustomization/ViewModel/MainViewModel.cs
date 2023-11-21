@@ -1,19 +1,13 @@
-﻿#region #viewmodel
+﻿using DevExpress.Mvvm;
+using DevExpress.Mvvm.DataAnnotations;
 using System;
 using System.Collections.ObjectModel;
-using DevExpress.Xpf.Scheduling;
-using DevExpress.Mvvm.DataAnnotations;
-using System.Windows;
-using DevExpress.Mvvm;
 
-namespace DXScheduler_PopUpMenuCustomization
-{
+namespace DXScheduler_PopUpMenuCustomization {
     [POCOViewModel]
-    public class MainViewModel
-    {
+    public class MainViewModel {
         readonly SportChannelsData data = new SportChannelsData(2);
-        protected MainViewModel()
-        {
+        protected MainViewModel() {
             WorkTimeStart = TimeSpan.FromHours(6);
             WorkTimeEnd = TimeSpan.FromHours(21);
         }
@@ -25,16 +19,13 @@ namespace DXScheduler_PopUpMenuCustomization
         public virtual ObservableCollection<SportGroup> SportGroups { get { return data.Groups; } }
         public virtual ObservableCollection<SportEvent> CancelledEvents { get; set; }
 
-        protected void OnWorkTimeStartChanged()
-        {
+        protected void OnWorkTimeStartChanged() {
             var end = (WorkTimeEnd < WorkTimeStart) ? WorkTimeStart.Add(TimeSpan.FromHours(1)) : WorkTimeEnd;
             WorkTime = new TimeSpanRange(WorkTimeStart, end);
         }
-        protected void OnWorkTimeEndChanged()
-        {
+        protected void OnWorkTimeEndChanged() {
             var start = (WorkTimeEnd < WorkTimeStart) ? WorkTimeEnd.Add(TimeSpan.FromHours(-1)) : WorkTimeStart;
             WorkTime = new TimeSpanRange(start, WorkTimeEnd);
         }
     }
 }
-#endregion #viewmodel
