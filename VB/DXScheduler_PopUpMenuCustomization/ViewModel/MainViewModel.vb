@@ -1,8 +1,7 @@
-#Region "#viewmodel"
+Imports DevExpress.Mvvm
+Imports DevExpress.Mvvm.DataAnnotations
 Imports System
 Imports System.Collections.ObjectModel
-Imports DevExpress.Mvvm.DataAnnotations
-Imports DevExpress.Mvvm
 
 Namespace DXScheduler_PopUpMenuCustomization
 
@@ -53,4 +52,3 @@ Namespace DXScheduler_PopUpMenuCustomization
         End Sub
     End Class
 End Namespace
-#End Region  ' #viewmodel

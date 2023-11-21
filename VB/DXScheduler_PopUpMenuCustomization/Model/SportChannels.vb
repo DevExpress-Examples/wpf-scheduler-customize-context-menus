@@ -1,10 +1,10 @@
+Imports DevExpress.Mvvm
+Imports DevExpress.XtraScheduler
 Imports System
 Imports System.Collections.ObjectModel
 Imports System.Globalization
 Imports System.Linq
 Imports System.Windows.Media
-Imports DevExpress.Mvvm
-Imports DevExpress.XtraScheduler
 
 Namespace DXScheduler_PopUpMenuCustomization
 

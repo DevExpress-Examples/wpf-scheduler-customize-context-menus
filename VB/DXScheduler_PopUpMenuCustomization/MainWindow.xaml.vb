@@ -4,9 +4,6 @@ Imports DevExpress.Xpf.Scheduling
 
 Namespace DXScheduler_PopUpMenuCustomization
 
-    ''' <summary>
-    ''' Interaction logic for MainWindow.xaml
-    ''' </summary>
     Public Partial Class MainWindow
         Inherits Window
 
