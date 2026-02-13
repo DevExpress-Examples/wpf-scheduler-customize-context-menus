@@ -33,7 +33,7 @@ This example customizes the following scheduler context menus:
 * [WPF Scheduler - Handle the PopupMenuShowing Event to Customize Context Menus](https://github.com/DevExpress-Examples/how-to-handle-the-popupmenushowing-event-to-customize-the-scheduler-context-menu-t575003)
 * [WPF Scheduler - Customize Appointment Flyout and Tooltip](https://github.com/DevExpress-Examples/wpf-scheduler-customize-appointment-flyout-and-tooltip)
 <!-- feedback -->
-## Does this example address your development requirements/objectives?
+## Does This Example Address Your Development Requirements/Objectives?
 
 [<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=wpf-scheduler-customize-context-menus&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=wpf-scheduler-customize-context-menus&~~~was_helpful=no)
 
